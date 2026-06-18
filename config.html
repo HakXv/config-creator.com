@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكوّن الحواسيب الذكي | PC Builder</title>
+    <style>
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --bg: #0b0f19;
+            --card-bg: #151c2e;
+            --text: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            color: #8fa0c4;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button.option-btn {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        button.option-btn:hover {
+            border-color: var(--primary);
+            background: rgba(0, 242, 254, 0.05);
+            transform: translateX(-5px);
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: right;
+        }
+
+        .result-item {
+            margin: 10px 0;
+            font-size: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 8px;
+        }
+
+        .result-item strong {
+            color: var(--primary);
+        }
+
+        .action-btn {
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            color: #000;
+            font-weight: bold;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 25px;
+            width: 100%;
+            transition: opacity 0.3s;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>مكوّن الحواسيب الذكي 🛠️</h1>
+    <p class="subtitle">قم بالإجابة على الأسئلة للحصول على التجميعة المثالية</p>
+
+    <div class="step active" id="step0">
+        <h3>مرحباً بك! هل أنت مستعد لبناء حاسوبك؟</h3>
+        <p>سنساعدك في اختيار القطع المتوافقة والمناسبة لميزانيتك واحتياجاتك تماماً.</p>
+        <button class="action-btn" onclick="nextStep(1)">ابدأ الآن</button>
+    </div>
+
+    <div class="step" id="step1">
+        <h3>1. ما هي ميزانيتك التقريبية؟</h3>
+        <div class="btn-group">
+            <button class="option-btn" onclick="setAnswer('budget', 'low'); nextStep(2);">💵 ميزانية اقتصادية (أقل من 500$)</button>
+            <button class="option-btn" onclick="setAnswer('budget', 'mid'); nextStep(2);">💳 ميزانية متوسطة (500$ - 1200$)</button>
+            <button class="option-btn" onclick="setAnswer('budget', 'high'); nextStep(2);">👑 ميزانية احترافية (أكثر من 1200$)</button>
+        </div>
+    </div>
+
+    <div class="step" id="step2">
+        <h3>2. ما هو استخدامك الأساسي للجهاز؟</h3>
+        <div class="btn-group">
+            <button class="option-btn" onclick="setAnswer('use', 'gaming'); nextStep(3);">🎮 الألعاب القوية والمنافسة</button>
+            <button class="option-btn" onclick="setAnswer('use', 'work'); nextStep(3);">🎬 المونتاج، صناعة المحتوى والدراسة</button>
+            <button class="option-btn" onclick="setAnswer('use', 'basic'); nextStep(3);">🌐 تصفح إنترنت وأعمال مكتبية خفيفة</button>
+        </div>
+    </div>
+
+    <div class="step" id="step3">
+        <h3>3. أي شركة معالجات تفضل؟</h3>
+        <div class="btn-group">
+            <button class="option-btn" onclick="setAnswer('cpuBrand', 'intel'); generatePC();">🔵 معالجات Intel</button>
+            <button class="option-btn" onclick="setAnswer('cpuBrand', 'amd'); generatePC();">🟢 معالجات AMD Ryzen</button>
+        </div>
+    </div>
+
+    <div class="step" id="resultStep">
+        <h3>🎉 حاسوبك المقترح جاهز!</h3>
+        <p>بناءً على اختياراتك، هذه هي التجميعة الأفضل لك:</p>
+        
+        <div class="result-card" id="pcResult">
+            </div>
+
+        <button class="action-btn" onclick="restartApp()">إعادة المحاولة 🔄</button>
+    </div>
+</div>
+
+<script>
+    // تخزين إجابات المستخدم
+    let answers = {
+        budget: '',
+        use: '',
+        cpuBrand: ''
+    };
+
+    function nextStep(stepNumber) {
+        // إخفاء كل الخطوات
+        document.querySelectorAll('.step').forEach(step => {
+            step.classList.remove('active');
+        });
+        // إظهار الخطوة المطلوبة
+        document.getElementById('step' + stepNumber).classList.add('active');
+    }
+
+    function setAnswer(key, value) {
+        answers[key] = value;
+    }
+
+    function restartApp() {
+        answers = { budget: '', use: '', cpuBrand: '' };
+        nextStep(0);
+    }
+
+    function generatePC() {
+        let pc = { cpu: '', gpu: '', ram: '', storage: '', psu: '', motherboard: '' };
+
+        // 1. تجميعة اقتصادية
+        if (answers.budget === 'low') {
+            pc.cpu = answers.cpuBrand === 'intel' ? 'Intel Core i3-12100F' : 'AMD Ryzen 5 4500';
+            pc.gpu = answers.use === 'basic' ? 'المعالج المدمج (بدون كارت خارجي)' : 'GTX 1650 4GB / RX 580';
+            pc.ram = '8GB DDR4 3200MHz';
+            pc.storage = '512GB NVMe M.2 SSD';
+            pc.motherboard = answers.cpuBrand === 'intel' ? 'H610M' : 'A520M';
+            pc.psu = '450W 80+ Bronze';
+        } 
+        // 2. تجميعة متوسطة
+        else if (answers.budget === 'mid') {
+            pc.cpu = answers.cpuBrand === 'intel' ? 'Intel Core i5-13400F' : 'AMD Ryzen 5 5600X';
+            pc.gpu = answers.use === 'work' ? 'RTX 3060 12GB (ممتاز للمونتاج)' : 'RTX 4060 8GB / RX 7600';
+            pc.ram = '16GB (2x8GB) DDR4 3600MHz';
+            pc.storage = '1TB NVMe M.2 SSD';
+            pc.motherboard = answers.cpuBrand === 'intel' ? 'B760M' : 'B550M';
+            pc.psu = '650W 80+ Bronze';
+        } 
+        // 3. تجميعة احترافية
+        else if (answers.budget === 'high') {
+            pc.cpu = answers.cpuBrand === 'intel' ? 'Intel Core i7-14700K' : 'AMD Ryzen 7 7800X3D (ملك الألعاب)';
+            pc.gpu = answers.use === 'gaming' ? 'RTX 4070 Ti Super / RTX 4080' : 'RTX 4070 12GB';
+            pc.ram = '32GB (2x16GB) DDR5 6000MHz';
+            pc.storage = '2TB NVMe M.2 SSD (Gen4)';
+            pc.motherboard = answers.cpuBrand === 'intel' ? 'Z790' : 'B650 Gaming';
+            pc.psu = '850W 80+ Gold';
+        }
+
+        // عرض النتيجة في صفحة الـ HTML
+        const resultHTML = `
+            <div class="result-item"><strong>المعالج (CPU):</strong> ${pc.cpu}</div>
+            <div class="result-item"><strong>كارت الشاشة (GPU):</strong> ${pc.gpu}</div>
+            <div class="result-item"><strong>اللوحة الأم (Motherboard):</strong> ${pc.motherboard}</div>
+            <div class="result-item"><strong>الرامات (RAM):</strong> ${pc.ram}</div>
+            <div class="result-item"><strong>التخزين (Storage):</strong> ${pc.storage}</div>
+            <div class="result-item"><strong>مزود الطاقة (PSU):</strong> ${pc.psu}</div>
+        `;
+
+        document.getElementById('pcResult').innerHTML = resultHTML;
+        
+        // الانتقال لصفحة النتيجة
+        document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+        document.getElementById('resultStep').classList.add('active');
+    }
+</script>
+
+</body>
+</html>
